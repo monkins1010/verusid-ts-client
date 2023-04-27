@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VerusCoin/verusid-ts-client.git"
+    "url": "git+https://github.com/monkins1010/verusid-ts-client.git"
   },
   "keywords": [
     "boilerplate",
@@ -27,9 +27,9 @@
   "author": "Michael Filip Toutonghi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/VerusCoin/verusid-ts-client.git/issues"
+    "url": "https://github.com/monkins1010/verusid-ts-client.git/issues"
   },
-  "homepage": "https://github.com/VerusCoin/verusid-ts-client.git#readme",
+  "homepage": "https://github.com/monkins1010/verusid-ts-client.git#readme",
   "devDependencies": {
     "@types/jest": "28.1.6",
     "@typescript-eslint/eslint-plugin": "5.30.7",
@@ -48,7 +48,7 @@
     "@bitgo/utxo-lib": "https://github.com/VerusCoin/BitGoJS.git#f8723bcc2bf4052de171ca8654de23fc06a03337",
     "axios": "0.27.2",
     "bignumber.js": "9.1.0",
-    "verus-typescript-primitives": "https://github.com/VerusCoin/verus-typescript-primitives.git",
-    "verusd-rpc-ts-client": "https://github.com/VerusCoin/verusd-rpc-ts-client.git"
+    "verus-typescript-primitives": "https://github.com/monkins1010/verus-typescript-primitives.git",
+    "verusd-rpc-ts-client": "https://github.com/monkins1010/verusd-rpc-ts-client.git"
   }
 }
