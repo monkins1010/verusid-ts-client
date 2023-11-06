@@ -362,7 +362,7 @@ class VerusIdInterface {
 
     if (sigBlockTime) blocktime = sigBlockTime;
     else {
-      const _blockres = await this.interface.getBlock(sigInfo.height);
+      const _blockres = await this.interface.getBlock(sigInfo.height.toString());
       if (_blockres.error) throw new Error(_blockres.error.message);
 
       blocktime = (_blockres.result as BlockInfo).time;
