@@ -3,7 +3,7 @@ import {
   GetIdentityResponse,
   LoginConsentRequest,
   VerusIDSignature,
-  LOGIN_CONSENT_REQUEST_SIG_VDXF_KEY,
+  IDENTITY_AUTH_SIG_VDXF_KEY,
   LoginConsentChallenge,
   LoginConsentProvisioningRequest,
   LoginConsentProvisioningChallenge,
@@ -311,7 +311,7 @@ class VerusIdInterface {
 
     request.signature = new VerusIDSignature(
       { signature: sig },
-      LOGIN_CONSENT_REQUEST_SIG_VDXF_KEY
+      IDENTITY_AUTH_SIG_VDXF_KEY
     );
 
     return request;
@@ -647,7 +647,7 @@ class VerusIdInterface {
 
     request.signature = new VerusIDSignature(
       { signature: sig },
-      LOGIN_CONSENT_REQUEST_SIG_VDXF_KEY
+      IDENTITY_AUTH_SIG_VDXF_KEY
     );
 
     return request;

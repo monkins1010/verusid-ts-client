@@ -15,7 +15,7 @@ describe('Creates and validates login consent requests', () => {
       new primitives.LoginConsentChallenge({
         challenge_id: "iKNufKJdLX3Xg8qFru9AuLBvivAEJ88PW4",
         requested_access: [
-          new primitives.RequestedPermission(primitives.IDENTITY_VIEW.vdxfid),
+          new primitives.RequestedPermission("",primitives.IDENTITY_VIEW.vdxfid),
         ],
         redirect_uris: [
           new primitives.RedirectUri(
