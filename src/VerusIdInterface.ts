@@ -14,6 +14,8 @@ import {
   LOGIN_CONSENT_RESPONSE_SIG_VDXF_KEY,
   SignedSessionObject,
   SignedSessionObjectData,
+  VerusPayInvoice,
+  VerusPayInvoiceDetails,
 } from "verus-typescript-primitives";
 import { VerusdRpcInterface } from "verusd-rpc-ts-client";
 import {
@@ -587,6 +589,91 @@ class VerusIdInterface {
     chainIAddr?: string
   ): Promise<boolean> {
     return this.verifyResponse(response, getIdentityResult, chainIAddr);
+  }
+
+  async createVerusPayInvoice(
+    details: VerusPayInvoiceDetails,
+    signingIdIAddr?: string,
+    primaryAddrWif?: string,
+    getIdentityResult?: GetIdentityResponse["result"],
+    currentHeight?: number,
+    chainIAddr?: string
+  ): Promise<VerusPayInvoice> {
+    let chainId: string;
+
+    if (chainIAddr != null) chainId = chainIAddr;
+    else chainId = await this.getChainId();
+
+    const inv = new VerusPayInvoice({
+      details: details
+    });
+
+    if (signingIdIAddr && primaryAddrWif) {
+      return this.signVerusPayInvoice(
+        inv,
+        signingIdIAddr!,
+        chainId,
+        primaryAddrWif,
+        getIdentityResult,
+        currentHeight
+      );
+    } else return inv;
+  }
+
+  async signVerusPayInvoice(
+    invoice: VerusPayInvoice,
+    signingIdIAddr: string,
+    systemIdIAddr: string,
+    primaryAddrWif: string,
+    getIdentityResult?: GetIdentityResponse["result"],
+    currentHeight?: number
+  ): Promise<VerusPayInvoice> {
+    let height = currentHeight;
+
+    if (height == null) {
+      height = await this.getCurrentHeight();
+    }
+
+    invoice.setSigned();
+    invoice.signing_id = signingIdIAddr;
+    invoice.system_id = systemIdIAddr;
+
+    const sig = await this.signHash(
+      signingIdIAddr,
+      invoice.getDetailsHash(height),
+      primaryAddrWif,
+      getIdentityResult,
+      height,
+      systemIdIAddr
+    );
+
+    invoice.signature = new VerusIDSignature(
+      { signature: sig },
+      IDENTITY_AUTH_SIG_VDXF_KEY,
+      false
+    );
+
+    return invoice;
+  }
+
+  async verifySignedVerusPayInvoice(
+    invoice: VerusPayInvoice,
+    getIdentityResult?: GetIdentityResponse["result"],
+    chainIAddr?: string
+  ): Promise<boolean> {
+    const sigInfo = await this.getSignatureInfo(
+      invoice.signing_id,
+      invoice.signature!.signature,
+      chainIAddr
+    );
+
+    return this.verifyHash(
+      invoice.signing_id,
+      invoice.signature!.signature,
+      invoice.getDetailsHash(sigInfo.height, sigInfo.version),
+      getIdentityResult,
+      chainIAddr
+    );
   }
 
   async signVerusIdProvisioningResponse(
